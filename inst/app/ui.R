@@ -5,6 +5,7 @@ shinyUI(
   dashboardPage(
     dashboardHeader(
       title = "taipan",
+      tags$li(class = "dropdown", actionLink("SpecHelp",span(icon("question-circle")," Program specific help"))),
       tags$li(class = "dropdown", downloadLink("btn_export", span(icon("download"), " Export Responses"))),
       tags$li(class = "dropdown", a(href="https://github.com/srkob1/taipan", target="_blank", span(icon("github"), " GitHub")))
     ),
@@ -16,21 +17,21 @@ shinyUI(
       includeCSS("www/taipan.css"),
       column(6,
              box(
-        title = textOutput("out_img_info"),
-        div(class = "taipan_image_div",
-            imageOutput("out_img_overlay",
-                        click = clickOpts(id = "img_click"),
-                        dblclick = dblclickOpts(id = "img_dblclick"),
-                        brush = brushOpts(id = "img_brush"),
-                        inline=TRUE),
-            imageOutput("out_img",
-                        inline = TRUE)
-        ),
-        width = 12,
-        status = "primary",
-        collapsible = TRUE
-      ),
-      uiOutput("ui_instructions")),
+               title = textOutput("out_img_info"),
+               div(class = "taipan_image_div",
+                   imageOutput("out_img_overlay",
+                               click = clickOpts(id = "img_click"),
+                               dblclick = dblclickOpts(id = "img_dblclick"),
+                               brush = brushOpts(id = "img_brush"),
+                               inline=TRUE),
+                   imageOutput("out_img",
+                               inline = TRUE)
+               ),
+               width = 12,
+               status = "primary",
+               collapsible = TRUE
+             ),
+             uiOutput("ui_instructions")),
 
       column(6,
              uiOutput("ui_questions"),

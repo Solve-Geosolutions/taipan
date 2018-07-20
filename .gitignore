@@ -7,3 +7,4 @@ symbols.rds
 revdep
 tests/testthat/Rplots.pdf
 inst/doc
+SolveSpecificData.R

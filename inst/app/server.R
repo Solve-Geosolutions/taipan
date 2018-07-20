@@ -15,6 +15,8 @@ getInputID <- function(input){
 shinyServer(
   function(input, output, session) {
     questions <- readRDS("data/questions.rds")
+    additionalHelp <- readRDS("data/additionalHelp.rds")
+
     image_list <- list.files("www/app_images", full.names = TRUE)
 
     v <- reactiveValues(
@@ -119,7 +121,7 @@ shinyServer(
         p("The", strong("Scene"),
           "section asks questions regarding the whole image, and will be saved when you continue to the next image.", "To answer questions about the current image,
           respond to the questions below."), br(),
-          br(),
+        br(),
         "Next step is to select an area. Hold down on the image to create a cornerof the selected area,
         drag the crosshairs vertically and horizontally to create a rectangle around your area of interest.", br(),
         p("The", strong("Selection"), "questions now appear.
@@ -131,8 +133,9 @@ shinyServer(
         status = "warning",
         solidHeader = TRUE,
         collapsible = TRUE,
+        collapsed = TRUE,
         width = 12
-      )
+        )
     })
 
     output$ui_questions <- renderUI({
@@ -173,20 +176,20 @@ shinyServer(
 
 
     observeEvent(v$editing, {
-        output$ui_deleteSelection <- renderUI({
-          if(!is.null(current_sel()) & v$editing){
-            actionLink(
-              "btn_deleteSelection",
-              box(
-                "Delete Selection",
-                width = 3,
-                background = "red", offset=1
-              )
+      output$ui_deleteSelection <- renderUI({
+        if(!is.null(current_sel()) & v$editing){
+          actionLink(
+            "btn_deleteSelection",
+            box(
+              "Delete Selection",
+              width = 3,
+              background = "red", offset=1
             )
-          } else {
-            column(3)
-          }
-        })})
+          )
+        } else {
+          column(3)
+        }
+      })})
 
     observeEvent(input$img_brush, {
       if(is.null(input$img_brush)){
@@ -344,5 +347,9 @@ shinyServer(
         write.csv(out, con, row.names = FALSE)
       }
     )
+
+    observeEvent(input$SpecHelp, {
+      showModal(modalDialog(additionalHelp,icon=icon("question-circle")))
+    })
   }
 )

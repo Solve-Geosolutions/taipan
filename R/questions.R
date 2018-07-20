@@ -6,6 +6,7 @@
 #' @examples
 #' \dontrun{
 #'
+#'
 #' questions <- taipanQuestions(
 #'   scene = div(radioButtons("graphic", label = ("2D Graphic"),
 #'                            choices = list("Live image", "2D Graphic")),
